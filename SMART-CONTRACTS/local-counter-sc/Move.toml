@@ -1,0 +1,16 @@
+[package]
+name = "local_counters"
+version = "1.0.0"
+authors = []
+
+[addresses]
+local_counters_addr='30d1b3c4fb8d6c4cab00563afce6e0c6a911859194b761234c2f1bfc8487ce13'
+
+[dev-addresses]
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-framework.git"
+rev = "mainnet"
+subdir = "aptos-framework"
+
+[dev-dependencies]

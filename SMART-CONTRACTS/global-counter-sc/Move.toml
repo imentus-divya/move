@@ -1,0 +1,16 @@
+[package]
+name = "global_counter"
+version = "1.0.0"
+authors = []
+
+[addresses]
+global_counter_addr='da2c86c52efaf5a6a995b1fe8b9d64d74f330ebfdf49ef388037372464a167c0'
+
+[dev-addresses]
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-framework.git"
+rev = "mainnet"
+subdir = "aptos-framework"
+
+[dev-dependencies]
