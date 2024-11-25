@@ -1,0 +1,2 @@
+aptos init --name fungible-token
+aptos move init --name fungible-token
