@@ -1,0 +1,15 @@
+[package]
+name = "tokenownership"
+version = "1.0.0"
+authors = []
+
+[addresses]
+tokenStoreAddr='2a0abf2355b42068acea7a8b5862785bf3656f9225872e2020480ca2eaa3e66c'
+[dev-addresses]
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-framework.git"
+rev = "mainnet"
+subdir = "aptos-framework"
+
+[dev-dependencies]

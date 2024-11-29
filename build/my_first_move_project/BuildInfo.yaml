@@ -14,8 +14,8 @@ compiled_package_info:
     vm_reserved: "0000000000000000000000000000000000000000000000000000000000000000"
   source_digest: 175CAE5ED490E4E786CEE885D4B3BEDA3304FF4555646FA0595CC19E8803E10B
   build_flags:
-    dev_mode: true
-    test_mode: true
+    dev_mode: false
+    test_mode: false
     override_std: ~
     generate_docs: false
     generate_abis: false
@@ -26,9 +26,9 @@ compiled_package_info:
     additional_named_addresses: {}
     architecture: ~
     fetch_deps_only: false
-    skip_fetch_latest_git_deps: true
+    skip_fetch_latest_git_deps: false
     compiler_config:
-      bytecode_version: ~
+      bytecode_version: 7
       known_attributes:
         - bytecode_instruction
         - deprecated
