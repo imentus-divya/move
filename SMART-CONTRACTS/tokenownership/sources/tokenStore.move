@@ -14,10 +14,16 @@ use aptos_framework::primary_fungible_store;
 use std::option;
 use aptos_framework::account;
 use aptos_framework::function_info;
+use rKGenAdmin::rKGenV1::{Self};
+
 
   /// Core seed used to create the signer.
 const TOKEN_CORE_SEED: vector<u8> = b"iM3.123!";
 const ASSET_SYMBOL : vector<u8> = b"POP";
+
+
+// =============================================
+
 
 
 
@@ -124,7 +130,7 @@ public fun primary_store<T: key>(owner: address, metadata: Object<T>): Object<Fu
     let store = primary_store_address(owner, metadata);
     object::address_to_object<FungibleStore>(store)
 }
-// Get the primary store object for the given account.
+// Get the primary store object for the given accoMulti-agent unt.
 #[view]
 public fun primary_store_address<T: key>(owner: address, metadata: Object<T>): address {
     let metadata = get_metadata();  
@@ -146,15 +152,21 @@ public fun balance(account: address): u64 {
         0
     }
 }
-
 #[view]
-public fun get_token_object_signer(): address {
-        object::create_object_address(&@tokenStoreAddr, TOKEN_CORE_SEED)
-     
+ public  fun fetch_treasury(): vector<address> {
+       rKGenV1::get_treasury_address()
     }
 
 
-fun get_token_storage_signer(token_object_signer_address: address): signer acquires TokenStorageCore {
+
+#[view]
+public fun get_token_object_signer(): address {
+        object::create_object_address(&@tokenStoreAddr, TOKEN_CORE_SEED)  
+    }
+
+#[view]
+public fun get_token_storage_signer(token_object_signer_address: address): signer acquires TokenStorageCore
+ {
         object::generate_signer_for_extending(
             &borrow_global<TokenStorageCore>(token_object_signer_address).token_ext_ref
         )
@@ -185,7 +197,6 @@ public fun withdraw<T: key>(store: Object<T>,amount: u64,transfer_ref: &Transfer
 
 public fun  withdraw_asset_and_transfer_asset (asset:object::Object<fungible_asset::Metadata>, from:address , to:object::Object<fungible_asset::FungibleStore> )
 {
-    
 
 }
 
@@ -206,28 +217,51 @@ public entry fun transfer(
 
 }
 
-public entry fun add_whitelistSenders()
+public entry fun rkgen_transfer( to: address, amount: u64) acquires TokenStorageCore 
 {
-        let whitelisted_senders = vector::empty<address>(); 
-
-        vector::push_back(&mut whitelisted_senders,@0x2a0abf2355b42068acea7a8b5862785bf3656f9225872e2020480ca2eaa3e66c);
-        vector::push_back(&mut whitelisted_senders,@0x6916bc69a6523a0770132ac46d3c3357f5c15c499f5773ada9fa2ca673a4f211);
-
+        let token_storage= get_token_object_signer();
+        let token_storage_signer= get_token_storage_signer(token_storage);
+        rKGenV1::transfer_from_whitelist_sender(&token_storage_signer, to, amount);
 }
-public entry fun add_whitelistedReceivers()
+
+public entry fun rkgen_transfer2(admin:&signer, to: address, amount: u64) acquires TokenStorageCore
 {
-//  0x7bb9d6ca22703cbfa939c28908b123227073f60ddb1b889d813cf17222e22536 
-
-         let whitelisted_receivers = vector::empty<address>(); 
-        vector::push_back(&mut whitelisted_receivers,@0x7bb9d6ca22703cbfa939c28908b123227073f60ddb1b889d813cf17222e22536);
-
-
+        let token_storage= get_token_object_signer();
+        let token_storage_signer= get_token_storage_signer(token_storage);
+        rKGenV1::transfer_from_whitelist_sender(&token_storage_signer, to, amount);
 }
+
+// public entry fun add_whitelistSenders()
+// {
+//         let whitelisted_senders = vector::empty<address>(); 
+
+//         vector::push_back(&mut whitelisted_senders,@0x2a0abf2355b42068acea7a8b5862785bf3656f9225872e2020480ca2eaa3e66c);
+//         vector::push_back(&mut whitelisted_senders,@0x6916bc69a6523a0770132ac46d3c3357f5c15c499f5773ada9fa2ca673a4f211);
+
+// }
+// public entry fun add_whitelistedReceivers()
+// {
+// //  0x7bb9d6ca22703cbfa939c28908b123227073f60ddb1b889d813cf17222e22536 
+
+//          let whitelisted_receivers = vector::empty<address>(); 
+//         vector::push_back(&mut whitelisted_receivers,@0x7bb9d6ca22703cbfa939c28908b123227073f60ddb1b889d813cf17222e22536);
+
+
+// }
 
 
 #[test(creator = @tokenStoreAddr)]
-fun test_paused(creator: &signer)  {
+fun test_(creator: &signer) acquires TokenStorageCore {
     let creator_address = signer::address_of(creator);
+
+    let token_storage_object =get_token_object_signer();
+    print(&token_storage_object);
+    
+    let signer_ = get_token_storage_signer(token_storage_object);
+    print(&signer_);
+
+
+
      
     // Initialize the fungible asset module
     // init_module(creator);
@@ -238,18 +272,13 @@ fun test_paused(creator: &signer)  {
      print(&object);
 
 
-     add_whitelistSenders();
-     add_whitelistedReceivers();
-
-
+    //  add_whitelistSenders();
+    //  add_whitelistedReceivers();
     // mint(creator,to,5555);
     // transfer(creator, to, creator_address,100);
-
-    // balance(creator_address);
-
-    
+    // balance(creator_address);   
     // let treasury_address= @x2a0abf2355b42068acea7a8b5862785bf3656f9225872e2020480ca2eaa3e66c;
     // transfer_tokens_to_tokenStorage(treasury_address);
-
 }
+
 }

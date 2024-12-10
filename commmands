@@ -1,2 +1,3 @@
 aptos move init --name fungible-token
 aptos init --network devnet
+ aptos move publish --max-gas 10000

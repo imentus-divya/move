@@ -1,0 +1,15 @@
+[package]
+name = "rkgen"
+version = "1.0.0"
+authors = []
+
+[addresses]
+rKGenAdmin='6916bc69a6523a0770132ac46d3c3357f5c15c499f5773ada9fa2ca673a4f211'
+[dev-addresses]
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-framework.git"
+rev = "mainnet"
+subdir = "aptos-framework"
+
+[dev-dependencies]

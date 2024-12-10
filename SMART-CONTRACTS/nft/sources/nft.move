@@ -12,8 +12,8 @@ module nft_addr::NFT {
     use aptos_framework::event;
     use aptos_std::string_utils::{to_string};
 
-    const COLLECTION_NAME: vector<u8> = b"D Collection Name";
-    const COLLECTION_DESCRIPTION: vector<u8> = b"D Collection DESCRIPTION";
+    const COLLECTION_NAME: vector<u8> = b"BLACK NFT COLLECTION";
+    const COLLECTION_DESCRIPTION: vector<u8> = b"Hi, This collection is created by Divya for testing !";
     const COLLECTION_URI: vector<u8> = b"https://indigo-central-gibbon-526.mypinata.cloud/ipfs/QmVUWUrDen8gcLCoSCFpc5WyAdfN96wq7xqRoWSSjyGjkR";
     const COLOR_RED: vector<u8> = b"Red";
     const COLOR_BLUE: vector<u8> = b"Blue";
@@ -31,6 +31,9 @@ module nft_addr::NFT {
     struct DTokenColor has key {
         DToken_color: String,
     }
+
+
+    
     #[event]
     struct ColorChange has drop, store {
         token: Object<DTokenRef>,
@@ -207,7 +210,7 @@ module nft_addr::NFT {
 
   
 
-    public fun burn_token(creator:&signer, collection_name:String, token_name:String) acquires DTokenRef,DTokenColor
+    public fun burn_token(creator:&signer, collection_name:String, token_name:String) acquires DTokenRef
     {
          let token=fetch_token_details_for_updation(creator,collection_name,token_name);
           // Asserts that `creator` is the creator of the token.
